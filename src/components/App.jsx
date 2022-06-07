@@ -1,20 +1,23 @@
 import React from "react";
+import { nanoid } from "nanoid";
+import { defaultLanguage, availableLanguages, selectLanguage, text } from "helpers/languageManager";
 
 import Contacts from "./Contacts";
 import ContactForm from "./ContactForm";
-import Filter from "./Filter";
-import { nanoid } from "nanoid";
 import LanguageToggle from "./LanguageToggle";
-import { defaultLanguage, availableLanguages, changeLanguage, text } from "helpers/languageManager";
+import Filter from "./Filter";
+
 
 
 
 export class App extends React.Component {
-  state = {
+  static defaultState = {
     contacts: [],
     filter: "",
     currentLanguage: defaultLanguage,
   }
+
+  state = structuredClone(this.constructor.defaultState);
 
   contactExists = searchName => this.state.contacts.some(({name}) => name === searchName);
 
@@ -41,7 +44,7 @@ export class App extends React.Component {
   updateFilterState = filter => this.setState({ filter });
 
   onChangeLanguage = newLanguage => {
-    changeLanguage(newLanguage);
+    selectLanguage(newLanguage);
     this.setState({ currentLanguage: newLanguage });
   }
 
@@ -57,8 +60,8 @@ export class App extends React.Component {
         <Contacts contacts={contacts} filter={filter} removeContact={this.removeContact} />
         <LanguageToggle
           languagesList={availableLanguages}
-          initialLanguage={currentLanguage}
-          changeLanguage={ this.onChangeLanguage }
+          currentLanguage={currentLanguage}
+          changeStateLanguage={ this.onChangeLanguage }
         />
       </div>
     )
