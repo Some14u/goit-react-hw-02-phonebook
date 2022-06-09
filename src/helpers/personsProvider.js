@@ -6,7 +6,7 @@ const randomItem = list => list[randomInRange(list.length)];
 
 function generateName() {
   const language = currentLanguage;
-  const gender = Math.random() > 0.5 ? 'male' : 'female';
+  const gender = Math.random() >= 0.5 ? 'male' : 'female';
   const node = persons[language][gender];
   return randomItem(node.first) + ' ' + randomItem(node.last);
 }
