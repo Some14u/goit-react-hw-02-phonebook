@@ -19,7 +19,10 @@ export class App extends React.Component {
 
   state = structuredClone(this.constructor.defaultState);
 
-  contactExists = searchName => this.state.contacts.some(({name}) => name === searchName);
+  contactExists = searchName => {
+    searchName = searchName.toLowerCase();
+    return this.state.contacts.some(({ name }) => name.toLowerCase() === searchName);
+  }
 
   addContact = ({ name, number }) => { // Returns true only on successfull insert
     if (this.contactExists(name)) {
